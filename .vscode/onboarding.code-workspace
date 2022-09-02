@@ -1,0 +1,29 @@
+{
+    "folders": [
+        {
+            "path": "..",
+            "name": "root",
+        },
+    {
+      "path": "../data-uploader",
+      "name": "/data-uploader"
+    }
+    ],
+    "settings": {
+    "files.exclude": {
+      "data-uploader/": true,
+      "coverage": true
+    },
+    "jest.disabledWorkspaceFolders": [
+      "root"
+    ]
+  },
+  "extensions": {
+    "recommendations": [
+      "orta.vscode-jest",
+      "dbaeumer.vscode-eslint",
+      "kddejong.vscode-cfn-lint",
+      "aws-scripting-guy.cform"
+    ]
+  }
+}
