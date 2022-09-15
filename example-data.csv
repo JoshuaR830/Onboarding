@@ -1,0 +1,6 @@
+id,title,description,dueDay,owner,team,isAutomated,resources,parentId
+58e43f87-6fec-46a3-b901-98119d020e07,Biscuit Rota,Find the biscuit rota in the kitchen and sign up,1,McVities,biscuit_procurement,false,null,00000000-0000-0000-0000-0000000000000
+8f312256-6665-47d0-8217-5c74fb82e44a,Buy Biscuits,Order the finest selection of biscuits,2,McVities,biscuit_procurement,false,null,58e43f87-6fec-46a3-b901-98119d020e07
+052add79-fca7-494c-966f-a47160e354f3,Test Biscuits,Ensure that one biscuit of each type are safe for consumption,3,cookie_monster,biscuit_tester,false,null,00000000-0000-0000-0000-0000000000000
+0080bef0-a1c7-4da6-8fc9-4e7787d4132a,Eat All Biscuits,Ensure that all the biscuits are of the same quality by eating them all,3,cookie_monster,biscuit_tester,false,null,052add79-fca7-494c-966f-a47160e354f3
+abb84ab6-db80-4145-bf3e-e80ceab6c5aa,Clear All Evidence,Now that all biscuits have been consumed ensure that the evidence is hidden,3,cookie_police,biscuit_tender,false,null,00000000-0000-0000-0000-0000000000000
