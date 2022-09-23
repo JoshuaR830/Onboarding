@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { parse } from 'csv-parse';
+import { parse } from 'csv-parse/sync';
 import { resolvePlugin } from "@babel/core";
 import { DynamoDBClient, PutItemCommand, PutItemCommandInput } from "@aws-sdk/client-dynamodb";
 import { dynamoClient } from "./dynamoClient";
@@ -26,22 +26,25 @@ export class FileImporter {
     public importCsvFileAsJson(fileName: string): string {
         const csvPath = path.resolve(__dirname, fileName);
         const headers = ['id', 'title', 'description', 'dueDay', 'owner', 'team', 'isAutomated', 'resources', 'parentId'];
-        const csvContent = fs.readFileSync(csvPath, { encoding: 'utf-8'});
+        
+        let csvContent :string = "";
+        try {
+            csvContent = fs.readFileSync(csvPath, { encoding: 'utf-8'});
+        } catch (error) {
+            console.error(error);
+        }
 
         var parsedCsv = parse(csvContent, {
             delimiter: ',',
-            columns: headers
-        }, (error, result: []) => {
-            if (error) {
-                console.log(error);
-            }
-            console.log(result);
-            return result;
+            
+            columns: headers,
+            skip_empty_lines: true
         });
 
         console.log(parsedCsv);
 
-        return "";
+        return parsedCsv;
+
     }
 
     public writeCsvToDynamoDb(fileName: string): string {

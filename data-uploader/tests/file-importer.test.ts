@@ -79,7 +79,7 @@ describe('File module', () => {
         const csvFileContent = csvExporter.generateCsv(csvData, true);
         fs.writeFileSync(fileName, csvFileContent);
         var json = fileImporter.importCsvFileAsJson(fileName);
-        expect(json).toBe("{}")
+        expect(json).toBe(csvData)
     });
 
     test('When named file does not exist', () => {
