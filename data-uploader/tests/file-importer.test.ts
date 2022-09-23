@@ -9,59 +9,59 @@ const dir = `${__dirname}/test`;
 
 const csvData = [
     {
-        id: "58e43f87-6fec-46a3-b901-98119d020e07",
-        title: "Biscuit Rota",
         description: "Find the biscuit rota in the kitchen and sign up",
         dueDay: "1",
-        owner: "McVities",
-        team: "biscuit_procurement",
+        id: "58e43f87-6fec-46a3-b901-98119d020e07",
         isAutomated: "false",
+        owner: "McVities",
+        parentId: "00000000-0000-0000-0000-0000000000000",
         resources: "null",
-        parentId: "00000000-0000-0000-0000-0000000000000"
+        team: "biscuit_procurement",
+        title: "Biscuit Rota"
     },
     {
-        id: "8f312256-6665-47d0-8217-5c74fb82e44a",
-        title: "Buy Biscuits",
         description: "Order the finest selection of biscuits",
         dueDay: "2",
-        owner: "McVities",
-        team: "biscuit_procurement",
+        id: "8f312256-6665-47d0-8217-5c74fb82e44a",
         isAutomated: "false",
+        owner: "McVities",
+        parentId: "58e43f87-6fec-46a3-b901-98119d020e07",
         resources: "null",
-        parentId: "58e43f87-6fec-46a3-b901-98119d020e07"
+        team: "biscuit_procurement",
+        title: "Buy Biscuits"
     },
     {
-        id: "052add79-fca7-494c-966f-a47160e354f3",
-        title: "Test Biscuits",
         description: "Ensure that one biscuit of each type are safe for consumption",
+        id: "052add79-fca7-494c-966f-a47160e354f3",
         dueDay: "3",
         owner: "cookie_monster",
-        team: "biscuit_tester",
         isAutomated: "false",
         resources: "null",
-        parentId: "00000000-0000-0000-0000-0000000000000"
+        parentId: "00000000-0000-0000-0000-0000000000000",
+        team: "biscuit_tester",
+        title: "Test Biscuits"
     },
     {
-        id: "0080bef0-a1c7-4da6-8fc9-4e7787d4132a",
-        title: "Eat All Biscuits",
         description: "Ensure that all the biscuits are of the same quality by eating them all",
         dueDay: "3",
-        owner: "cookie_monster",
-        team: "biscuit_tester",
+        id: "0080bef0-a1c7-4da6-8fc9-4e7787d4132a",
         isAutomated: "false",
+        owner: "cookie_monster",
+        parentId: "052add79-fca7-494c-966f-a47160e354f3",
         resources: "null",
-        parentId: "052add79-fca7-494c-966f-a47160e354f3"
+        team: "biscuit_tester",
+        title: "Eat All Biscuits"
     },
     {
-        id: "abb84ab6-db80-4145-bf3e-e80ceab6c5aa",
-        title: "Clear All Evidence",
         description: "Now that all biscuits have been consumed ensure that the evidence is hidden",
         dueDay: "3",
-        owner: "cookie_police",
-        team: "biscuit_tender",
         isAutomated: "false",
+        id: "abb84ab6-db80-4145-bf3e-e80ceab6c5aa",
+        owner: "cookie_police",
+        parentId: "00000000-0000-0000-0000-0000000000000",
         resources: "null",
-        parentId: "00000000-0000-0000-0000-0000000000000"
+        team: "biscuit_tender",
+        title: "Clear All Evidence"
     }
 ]
 
@@ -79,12 +79,12 @@ describe('File module', () => {
         const csvFileContent = csvExporter.generateCsv(csvData, true);
         fs.writeFileSync(fileName, csvFileContent);
         var json = fileImporter.importCsvFileAsJson(fileName);
-        expect(json).toBe(csvData)
+        expect(json).toStrictEqual(csvData)
     });
 
     test('When named file does not exist', () => {
         var nonExistentFileName = "/test/notexists.csv";
-        var json = fileImporter.importCsvFileAsJson(nonExistentFileName)
+        var json = fileImporter.importCsvFileAsJson(nonExistentFileName);
         expect(json).toBe("");
     })
 }) 
