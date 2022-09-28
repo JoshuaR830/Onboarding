@@ -16,7 +16,9 @@
     },
     "dependencies": {
         "@aws-sdk/client-dynamodb": "^3.170.0",
-        "export-to-csv": "^0.2.1",
-        "csv-parse": "^5.3.0"
+        "@aws-sdk/lib-dynamodb": "^3.180.0",
+        "aws-sdk-client-mock": "^2.0.0",
+        "csv-parse": "^5.3.0",
+        "export-to-csv": "^0.2.1"
     }
 }

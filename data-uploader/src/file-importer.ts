@@ -3,7 +3,8 @@ import * as path from "path";
 import { parse } from 'csv-parse/sync';
 import { resolvePlugin } from "@babel/core";
 import { DynamoDBClient, PutItemCommand, PutItemCommandInput } from "@aws-sdk/client-dynamodb";
-import { dynamoClient } from "./dynamo-client";
+import { dynamoClient, readFromDynamoDb, writeCsvToDynamoDb } from "./dynamo-client";
+import { GetCommand } from "@aws-sdk/lib-dynamodb";
 
 const params : PutItemCommandInput = {
     TableName: '',
@@ -45,8 +46,11 @@ export class FileImporter {
         return parsedCsv;
     }
 
-    public writeCsvToDynamoDb(fileName: string): string {
-        dynamoClient
-        return "";
+    public doThing() {
+        const thing = readFromDynamoDb();
+    }
+
+    public doOtherThing() {
+        writeCsvToDynamoDb(command);
     }
 }
