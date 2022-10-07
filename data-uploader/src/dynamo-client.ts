@@ -8,13 +8,20 @@ export async function writeCsvToDynamoDb(putItemCommand : PutItemCommand) {
     await dynamoClient.send(putItemCommand);
 }
 
-export async function readFromDynamoDb(): Promise<string[]> {
-    const results = await dynamoClient.send(new GetCommand({
-        TableName: '',
+export async function readFromDynamoDb(id: string): Promise<string[]> {
+    var client = DynamoDBDocumentClient.from(new DynamoDBClient({ }))
+    const results = await client.send(new GetCommand({
+        TableName: 'Thing',
         Key: {
-            id: ''
+            Name: id
         }
     }));
 
-    return ["", ""];
+    if(!results.Item) {
+        return new Promise(() => {
+            [""]
+        });
+    }
+
+    return [results.Item.toString()]
 }
