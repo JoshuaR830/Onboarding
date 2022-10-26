@@ -47,7 +47,7 @@ export class FileImporter {
     }
 
     public doThing() {
-        const thing = readFromDynamoDb();
+        const thing = readFromDynamoDb('id');
     }
 
     public doOtherThing() {

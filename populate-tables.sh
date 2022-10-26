@@ -10,3 +10,6 @@ for i in ${!tableNames[@]}; do
     fi
     # Run the code that imports the csv and stores in the tables
 done
+
+cd data-uploader
+npm run uploader

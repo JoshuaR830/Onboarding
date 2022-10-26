@@ -1,6 +1,7 @@
-import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
+import { PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, GetCommand, PutCommand } from "@aws-sdk/lib-dynamodb";
 import { mockClient } from "aws-sdk-client-mock";
-import { readFromDynamoDb } from "../src/dynamo-client"
+import { readFromDynamoDb, writeCsvToDynamoDb } from "../src/dynamo-client"
 
 const mockedDb = mockClient(DynamoDBDocumentClient);
 
@@ -53,4 +54,34 @@ describe('Dynamo tests', () => {
         expect(thing).toStrictEqual({});
     });
 });
+
+// https://blog.chriscatt.com/jest-mocking-with-aws-sdk-v3
+// https://codewithhugo.com/jest-specific-argument-parameter-assert/
+// Yeah, this didn't work, I don't know why - I want to make code progress and don't want to be hing up on this
+describe('DynamoDB put tests', () => {
+    beforeEach(() => {
+        mockedDb.reset();
+    });
+
+    test('Check that an item is put correctly', async () => {
+        const command = new PutItemCommand({
+            TableName: 'TestTable',
+            Item: {
+                Id: { S: 'PutTest'},
+                Title: { S: 'Party Rings'},
+                Description: { S: 'Get ready to party with these biscuits' },
+                DueDay: { N: "1" },
+                Owner: { S: 'Myself' },
+                Team: { S: 'Party Pillar' },
+                IsAutomated: { BOOL: false },
+                Resources: { S: 'Disco ball, music, biscuits' },
+                ParentId: { S: '' }
+            },
+        });
+
+        await writeCsvToDynamoDb(command);
+
+        expect(mockedDb.send).toHaveBeenCalledWith(command);
+    })
+})
 
