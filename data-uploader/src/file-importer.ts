@@ -24,7 +24,7 @@ const params : PutItemCommandInput = {
 const command = new PutItemCommand(params);
 
 export class FileImporter {
-    public importCsvFileAsJson(fileName: string): string {
+    public importCsvFileAsJson(fileName: string): Item[] {
         const csvPath = path.resolve(__dirname, fileName);
         const headers = ['id', 'title', 'description', 'dueDay', 'owner', 'team', 'isAutomated', 'resources', 'parentId'];
         let csvContent :string = "";
@@ -32,10 +32,10 @@ export class FileImporter {
             csvContent = fs.readFileSync(csvPath, { encoding: 'utf-8'});
         } catch (error) {
             console.error(error);
-            return csvContent;
+            return [];
         }
 
-        var parsedCsv = parse(csvContent, {
+        var parsedCsv: Item[] = parse(csvContent, {
             delimiter: ',',
             bom: true,
             columns: true,
@@ -50,7 +50,19 @@ export class FileImporter {
         const thing = readFromDynamoDb('id');
     }
 
-    public doOtherThing() {
+    public doOtherThing(command: PutItemCommand) {
         writeCsvToDynamoDb(command);
     }
+}
+
+interface Item {
+    id: string;
+    title: string;
+    description: string;
+    dueDay: number;
+    owner: string;
+    team: string;
+    isAutomated: boolean;
+    resources: string;
+    parentId: string;
 }

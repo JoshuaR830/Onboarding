@@ -2,9 +2,7 @@
 
 import * as readline from 'readline';
 import { FileImporter } from './file-importer';
-
-
-console.log('Hello');
+import { PutItemCommand } from "@aws-sdk/client-dynamodb";
 
 let fileNameReader = readline.createInterface({
     input: process.stdin,
@@ -13,5 +11,33 @@ let fileNameReader = readline.createInterface({
 
 fileNameReader.question('Enter the filename', (fileName) => {
     let fileImporter = new FileImporter();
-    fileImporter.importCsvFileAsJson(fileName);
+    let parsedCsv = fileImporter.importCsvFileAsJson(fileName);
+
+    console.log('-----');
+    console.log(parsedCsv[0]);
+    
+    parsedCsv.forEach(item => {
+        console.log(item);
+        item.id
+
+        var command: PutItemCommand = new PutItemCommand({
+            TableName: "OnboardingTest",
+            Item: {
+                Id: { S: item.id },
+                Title: { S: item.title },
+                Description: { S: item.description },
+                DueDay: { N: item.dueDay.toString() },
+                Owner: { S: item.owner },
+                Team: { S: item.team },
+                IsAutomated: { BOOL: item.isAutomated },
+                Resources: { S: item.resources },
+                ParentId: { S: item.parentId }
+            }
+        });
+
+        fileImporter.doOtherThing(command);
+    });
+    console.log('-----');
 });
+
+
