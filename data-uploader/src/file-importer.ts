@@ -46,12 +46,12 @@ export class FileImporter {
         return parsedCsv;
     }
 
-    public doThing() {
-        const thing = readFromDynamoDb('id');
+    public getItemFromDynamoDbByTeam(teamName: string) {
+        const thing = readFromDynamoDb(teamName);
     }
 
-    public doOtherThing(command: PutItemCommand) {
-        writeCsvToDynamoDb(command);
+    public async putProvidedItemInDynamoDb(command: PutItemCommand) {
+        await writeCsvToDynamoDb(command);
     }
 }
 

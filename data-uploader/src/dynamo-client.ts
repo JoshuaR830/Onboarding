@@ -1,5 +1,5 @@
-import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, GetCommand, GetCommandOutput } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBClient, PutItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocumentClient, GetCommand, GetCommandOutput, QueryCommandOutput } from "@aws-sdk/lib-dynamodb";
 
 export const REGION = "eu-west-1";
 export const dynamoClient = DynamoDBDocumentClient.from(new DynamoDBClient({ region: REGION, endpoint: 'http://localhost:4566' }));
@@ -23,4 +23,8 @@ export async function readFromDynamoDb(id: string): Promise<Record<string, any>>
     }
 
     return results.Item
+}
+
+export async function queryDynamoDb(query: QueryCommand) : Promise<QueryCommandOutput> {
+    return await dynamoClient.send(query);
 }
