@@ -4,10 +4,14 @@
             "path": "..",
             "name": "root",
         },
-    {
-      "path": "../data-uploader",
-      "name": "/data-uploader"
-    }
+        {
+          "path": "../data-uploader",
+          "name": "/data-uploader"
+        },
+        {
+          "path": "../content-delivery-api",
+          "name": "/content-delivery-api"
+        }
     ],
     "settings": {
     "files.exclude": {
